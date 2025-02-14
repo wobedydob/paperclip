@@ -5,12 +5,14 @@ namespace Commands;
 use Exceptions\MissingPropertyException;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
+use Traits\ANSI;
 
 abstract class Command
 {
+    use ANSI;
+
     public static string $command;
     public static array $arguments = [];
-    public static string $usage;
 
     private array $argv;
 
@@ -19,14 +21,9 @@ abstract class Command
         $this->argv = $argv;
     }
 
-    /**
-     * Execute the command.
-     */
     public abstract function execute(): void;
+    public abstract static function usage(): string;
 
-    /**
-     * Get the arguments for the command.
-     */
     protected function arguments(): \Arguments
     {
         // strip 0 index and 1 index from arguments array
@@ -51,9 +48,6 @@ abstract class Command
         return new \Arguments($this->argv, $result);
     }
 
-    /**
-     * Get the command name.
-     */
     public static function command(): string
     {
         if (!isset(static::$command)) {
@@ -62,20 +56,17 @@ abstract class Command
         return static::$command;
     }
 
-    /**
-     * Get the command usage.
-     */
-    public static function usage(): ?string
-    {
-        if (!isset(static::$usage)) {
-            return null;
-        }
-        return static::$usage;
-    }
+//    /**
+//     * Get the command usage.
+//     */
+//    public static function usage(): ?string
+//    {
+//        if (!isset(static::$usage)) {
+//            return null;
+//        }
+//        return static::$usage;
+//    }
 
-    /**
-     * Get all available commands.
-     */
     public static function commands(): array
     {
         $namespace = 'Commands';
@@ -105,9 +96,6 @@ abstract class Command
         return $commands;
     }
 
-    /**
-     * Get the usage for all available commands.
-     */
     public static function usages(): string
     {
         $string = "========================================== [ / PAPERCLIP \ ] ==========================================\n";
