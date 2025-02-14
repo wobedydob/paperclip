@@ -110,7 +110,7 @@ abstract class Command
      */
     public static function usages(): string
     {
-        $string = "========================================== [ / SPL MARKDOWN COMMANDS \ ] ==========================================\n";
+        $string = "========================================== [ / PAPERCLIP \ ] ==========================================\n";
         $string .= "Usage: ./execute.php [command] [arguments]\n\n";
         $string .= "Commands:\n";
 
@@ -124,8 +124,7 @@ abstract class Command
         $string .= "Notes:\n";
         $string .= "- All commands are case-sensitive.\n";
         $string .= "- Ensure PHP is installed and the script has execute permissions (use chmod +x if necessary).\n";
-        $string .= "- The `splmd.config.json` file is required in each project for proper functionality.\n";
-        $string .= "========================================== [ \ SPL MARKDOWN COMMANDS / ] ==========================================\n";
+        $string .= "========================================== [ \ PAPERCLIP / ] ==========================================\n";
 
         return $string;
     }
