@@ -3,6 +3,8 @@
 
 use Commands\Command;
 
+const PROJECT_NAME = 'PAPERCLIP';
+
 $execute = $argv[1] ?? null;
 if (!$execute) {
     echo "Usage: php execute.php [command]\n";

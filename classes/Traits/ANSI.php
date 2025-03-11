@@ -7,46 +7,61 @@ namespace Traits;
  * @method static string black(string $text)
  * @method static string blue(string $text)
  * @method static string cyan(string $text)
- * @method static string darkGray(string $text)
+ * @method static string dark_gray(string $text)
  * @method static string gray(string $text)
  * @method static string green(string $text)
- * @method static string lightBlue(string $text)
- * @method static string lightCyan(string $text)
- * @method static string lightGray(string $text)
- * @method static string lightGreen(string $text)
- * @method static string lightMagenta(string $text)
- * @method static string lightRed(string $text)
- * @method static string lightYellow(string $text)
+ * @method static string light_blue(string $text)
+ * @method static string light_cyan(string $text)
+ * @method static string light_gray(string $text)
+ * @method static string light_green(string $text)
+ * @method static string light_magenta(string $text)
+ * @method static string light_red(string $text)
+ * @method static string light_yellow(string $text)
  * @method static string magenta(string $text)
  * @method static string red(string $text)
  * @method static string white(string $text)
  * @method static string yellow(string $text)
  *
  * Background
- * @method static string blackBg(string $text)
- * @method static string blueBg(string $text)
- * @method static string cyanBg(string $text)
- * @method static string darkGrayBg(string $text)
- * @method static string grayBg(string $text)
- * @method static string greenBg(string $text)
- * @method static string lightBlueBg(string $text)
- * @method static string lightCyanBg(string $text)
- * @method static string lightGrayBg(string $text)
- * @method static string lightGreenBg(string $text)
- * @method static string lightMagentaBg(string $text)
- * @method static string lightRedBg(string $text)
- * @method static string lightYellowBg(string $text)
- * @method static string magentaBg(string $text)
- * @method static string redBg(string $text)
- * @method static string whiteBg(string $text)
- * @method static string yellowBg(string $text)
+ * @method static string bg_black(string $text)
+ * @method static string bg_blue(string $text)
+ * @method static string bg_cyan(string $text)
+ * @method static string bg_dark_gray(string $text)
+ * @method static string bf_gray(string $text)
+ * @method static string bg_green(string $text)
+ * @method static string bg_light_blue(string $text)
+ * @method static string bg_light_cyan(string $text)
+ * @method static string bg_light_gray(string $text)
+ * @method static string bg_light_green(string $text)
+ * @method static string bg_light_magenta(string $text)
+ * @method static string bg_light_red(string $text)
+ * @method static string bg_light_yellow(string $text)
+ * @method static string bg_magenta(string $text)
+ * @method static string bg_red(string $text)
+ * @method static string bg_white(string $text)
+ * @method static string bg_yellow(string $text)
  *
  * Text Formatting
  * @method static string bold(string $text)
- * @method static string reset(string $text)
+ * @method static string dim(string $text)
+ * @method static string italic(string $text)
  * @method static string underline(string $text)
+ * @method static string blink(string $text)
+ * @method static string inverse(string $text)
+ * @method static string hidden(string $text)
+ * @method static string strikethrough(string $text)
+ *
+ * Reset Options
+ * @method static string reset(string $text)
+ * @method static string reset_bold(string $text)
+ * @method static string reset_dim(string $text)
+ * @method static string reset_italic(string $text)
+ * @method static string reset_underline(string $text)
+ * @method static string reset_blink(string $text)
+ * @method static string reset_inverse(string $text)
+ * @method static string reset_hidden(string $text)
+ * @method static string reset_strikethrough(string $text)
  */
-
 trait ANSI
 {
     /** @var array<string, string> */
@@ -71,28 +86,44 @@ trait ANSI
         'yellow' => '33',
 
         # Background
-        'black_bg' => '40',
-        'blue_bg' => '44',
-        'cyan_bg' => '46',
-        'dark_gray_bg' => '100',
-        'gray_bg' => '47',
-        'green_bg' => '42',
-        'light_blue_bg' => '104',
-        'light_cyan_bg' => '106',
-        'light_gray_bg' => '47',
-        'light_green_bg' => '102',
-        'light_magenta_bg' => '105',
-        'light_red_bg' => '101',
-        'light_yellow_bg' => '103',
-        'magenta_bg' => '45',
-        'red_bg' => '41',
-        'white_bg' => '107',
-        'yellow_bg' => '43',
+        'bg_black' => '40',
+        'bg_blue' => '44',
+        'bg_cyan' => '46',
+        'bg_dark_gray' => '100',
+        'bg_gray' => '47',
+        'bg_green' => '42',
+        'bg_light_blue' => '104',
+        'bg_light_cyan' => '106',
+        'bg_light_gray' => '47',
+        'bg_light_green' => '102',
+        'bg_light_magenta' => '105',
+        'bg_light_red' => '101',
+        'bg_light_yellow' => '103',
+        'bg_magenta' => '45',
+        'bg_red' => '41',
+        'bg_white' => '107',
+        'bg_yellow' => '43',
 
         # Text Formatting
         'bold' => '1',
-        'reset' => '0',
+        'dim' => '2',
+        'italic' => '3',
         'underline' => '4',
+        'blink' => '5',
+        'inverse' => '7',
+        'hidden' => '8',
+        'strikethrough' => '9',
+
+        # Reset Options
+        'reset' => '0',
+        'reset_bold' => '21',
+        'reset_dim' => '22',
+        'reset_italic' => '23',
+        'reset_underline' => '24',
+        'reset_blink' => '25',
+        'reset_inverse' => '27',
+        'reset_hidden' => '28',
+        'reset_strikethrough' => '29',
     ];
 
     private static function colorize(string $text, string $colorCode): string

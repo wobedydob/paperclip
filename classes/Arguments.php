@@ -25,4 +25,14 @@ class Arguments
     {
         return $this->argv;
     }
+
+    public function hasFlag(string $flag): bool
+    {
+        return in_array($flag, $this->argv);
+    }
+
+    public function hasHelpFlag(): bool
+    {
+        return $this->hasFlag('-h') || $this->hasFlag('--help');
+    }
 }

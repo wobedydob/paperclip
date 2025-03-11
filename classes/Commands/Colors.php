@@ -4,16 +4,13 @@ namespace Commands;
 
 class Colors extends Command
 {
-    public static string $command = '--colors';
-
-    public function execute(): void
-    {
-        echo self::usage(true);
-    }
+    public static string $command = 'colors';
 
     public static function usage(bool $displayOptions = false): string
     {
-        $usage = "--colors \n";
+        $command = self::$command;
+
+        $usage = self::green("> $command\n");
         $usage .= "      Displays a list of available colors.\n";
 
         if ($displayOptions) {
@@ -25,5 +22,10 @@ class Colors extends Command
         }
 
         return $usage;
+    }
+
+    public function execute(): void
+    {
+        echo self::usage(true);
     }
 }
