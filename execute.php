@@ -1,7 +1,12 @@
 #!/usr/bin/env php
-<?php require 'autoloader.php';
+<?php
 
-use Commands\Command;
+use Paperclip\Commands\Command;
+
+$autoload = __DIR__ . '/vendor/autoload.php';
+if (file_exists($autoload)) {
+    require $autoload;
+}
 
 const PROJECT_NAME = 'PAPERCLIP';
 

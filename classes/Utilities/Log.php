@@ -1,6 +1,8 @@
 <?php
 
-use Traits\ANSI;
+namespace Paperclip\Utilities;
+
+use Paperclip\Traits\ANSI;
 
 class Log
 {

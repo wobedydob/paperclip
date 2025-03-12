@@ -1,6 +1,6 @@
 <?php
 
-namespace Commands;
+namespace Paperclip\Commands;
 
 class Confirm extends Command
 {

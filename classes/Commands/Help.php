@@ -1,6 +1,8 @@
 <?php
 
-namespace Commands;
+namespace Paperclip\Commands;
+
+use Paperclip\Utilities\Log;
 
 class Help extends Command
 {
@@ -17,10 +19,10 @@ class Help extends Command
 
     public function execute(): void
     {
-        \Log::header("HELP");
-        \Log::newLine();
-        \Log::message(self::usages());
-        \Log::newLine();
-        \Log::footer("HELP");
+        Log::header("HELP");
+        Log::newLine();
+        Log::message(self::usages());
+        Log::newLine();
+        Log::footer("HELP");
     }
 }

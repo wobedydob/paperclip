@@ -1,6 +1,6 @@
 <?php
 
-namespace Commands;
+namespace Paperclip\Commands;
 
 class Colors extends Command
 {

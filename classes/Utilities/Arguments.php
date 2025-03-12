@@ -1,5 +1,7 @@
 <?php
 
+namespace Paperclip\Utilities;
+
 /**
  * Arguments class.
  *

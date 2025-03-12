@@ -1,11 +1,12 @@
 <?php
 
-namespace Commands;
+namespace Paperclip\Commands;
 
-use Exceptions\MissingPropertyException;
+use Paperclip\Exceptions\MissingPropertyException;
+use Paperclip\Utilities\Arguments;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
-use Traits\ANSI;
+use Paperclip\Traits\ANSI;
 
 abstract class Command
 {
@@ -29,7 +30,7 @@ abstract class Command
 
     public abstract function execute(): void;
 
-    protected function arguments(): \Arguments
+    protected function arguments(): Arguments
     {
         // strip 0 index and 1 index from arguments array
         $arguments = array_slice($this->argv, 2);
@@ -37,7 +38,7 @@ abstract class Command
             throw new MissingPropertyException(static::class, '$arguments', 981398617283);
         }
         if (!$arguments) {
-            return new \Arguments($this->argv, []);
+            return new Arguments($this->argv, []);
         }
         $result = [];
         foreach (static::$arguments as $index => $argument) {
@@ -46,7 +47,7 @@ abstract class Command
             }
             $result[$argument] = $arguments[$index];
         }
-        return new \Arguments($this->argv, $result);
+        return new Arguments($this->argv, $result);
     }
 
     public static function command(): string
@@ -59,7 +60,7 @@ abstract class Command
 
     public static function commands(): array
     {
-        $namespace = 'Commands';
+        $namespace = 'Paperclip\\Commands';
         $directory = __DIR__;
         $commands = [];
         if (is_dir($directory)) {
