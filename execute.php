@@ -8,6 +8,8 @@ if (file_exists($autoload)) {
     require $autoload;
 }
 
+require 'functions.php';
+
 const PROJECT_NAME = 'PAPERCLIP';
 
 $execute = $argv[1] ?? null;

@@ -14,7 +14,7 @@ abstract class Command
 
     public static string $command;
     public static array $arguments = [];
-    private array $argv;
+    protected array $argv;
 
     public function __construct(array $argv)
     {
@@ -72,7 +72,7 @@ abstract class Command
                     $relativePath = str_replace($directory . DIRECTORY_SEPARATOR, '', $file->getPathname());
                     $class = $namespace . '\\' . str_replace(['/', '.php'], ['\\', ''], $relativePath);
                     // exclude the Command class itself
-                    if ($class === self::class) {
+                    if ($class === self::class || $class === ConfirmCommand::class) {
                         continue;
                     }
                     $commands[] = $class;
