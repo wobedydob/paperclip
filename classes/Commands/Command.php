@@ -6,6 +6,7 @@ use Paperclip\Exceptions\InvalidConfigFileException;
 use Paperclip\Exceptions\MissingPropertyException;
 use Paperclip\Traits\ANSI;
 use Paperclip\Utilities\Arguments;
+use Paperclip\Utilities\FileManager;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 
@@ -87,7 +88,7 @@ abstract class Command
         }
 
         // then locate all custom commands
-        $config = getcwd() . '/paperclip.commands.json';
+        $config = FileManager::projectRoot('paperclip.commands.json');
         if (file_exists($config)) {
             $json = file_get_contents($config);
             $externalCommands = json_decode($json, true);
