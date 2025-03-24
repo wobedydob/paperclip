@@ -2,15 +2,18 @@
 
 namespace Paperclip\Commands;
 
+use Paperclip\Exceptions\InvalidConfigFileException;
 use Paperclip\Exceptions\MissingPropertyException;
+use Paperclip\Traits\ANSI;
 use Paperclip\Utilities\Arguments;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
-use Paperclip\Traits\ANSI;
 
 abstract class Command
 {
     use ANSI;
+
+    private const array EXCLUDED_COMMANDS = [self::class, ConfirmCommand::class];
 
     public static string $command;
     public static array $arguments = [];
@@ -60,9 +63,12 @@ abstract class Command
 
     public static function commands(): array
     {
+        $commands = [];
+
         $namespace = 'Paperclip\\Commands';
         $directory = __DIR__;
-        $commands = [];
+
+        // first locate all default commands
         if (is_dir($directory)) {
             $files = new RecursiveIteratorIterator(
                 new RecursiveDirectoryIterator($directory)
@@ -72,14 +78,41 @@ abstract class Command
                     $relativePath = str_replace($directory . DIRECTORY_SEPARATOR, '', $file->getPathname());
                     $class = $namespace . '\\' . str_replace(['/', '.php'], ['\\', ''], $relativePath);
                     // exclude the Command class itself
-                    if ($class === self::class || $class === ConfirmCommand::class) {
+                    if (self::beExcluded($class)) {
                         continue;
                     }
                     $commands[] = $class;
                 }
             }
         }
+
+        // then locate all custom commands
+        $config = getcwd() . '/paperclip.commands.json';
+        if (file_exists($config)) {
+            $json = file_get_contents($config);
+            $externalCommands = json_decode($json, true);
+
+            if (!is_array($externalCommands)) {
+                throw new InvalidConfigFileException($config);
+            }
+
+            foreach ($externalCommands as $externalCommand) {
+                if (!class_exists($externalCommand)) {
+                    continue;
+                }
+
+                if (!self::beExcluded($externalCommand)) {
+                    $commands[] = $externalCommand;
+                }
+            }
+        }
+
         return $commands;
+    }
+
+    private static function beExcluded(string $class): bool
+    {
+        return in_array($class, self::EXCLUDED_COMMANDS);
     }
 
     public static function usages(): string

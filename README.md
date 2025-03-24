@@ -1,6 +1,20 @@
 # 📎 Paperclip
 A PHP CLI tool to manage custom commands.
 
+# Creating commands
+From the root of your project you can add Commands however you like.
+The default structure is classes/Commands/... (in composer: NAMESPACE/Commands/...)
+
+Make the new command be a child of the `Command.php` class and register this in the
+`paperclip.commands.json` file in the root of your project.
+
+Example:
+```json
+[
+  'NAMESPACE/Commands/ExampleCommand'
+]
+```
+
 # Composer packages
 ```js
 - "google/apiclient"
