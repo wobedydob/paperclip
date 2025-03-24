@@ -1,6 +1,7 @@
 {
     "name": "wuppo/paperclip",
     "description": "PHP CLI",
+    "license": "MIT",
     "require": {
         "google/apiclient": "^2.18",
         "vlucas/phpdotenv": "^5.6",
