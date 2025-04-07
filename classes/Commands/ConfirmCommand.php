@@ -25,7 +25,7 @@ abstract class ConfirmCommand extends Command
         return $output;
     }
 
-    public function giveOption(string $message, callable $scenario): void
+    public function giveOption(string $message, callable $scenario, callable $default = null): void
     {
         echo $message;
         $handle = fopen("php://stdin", "r");
@@ -35,7 +35,12 @@ abstract class ConfirmCommand extends Command
         if (!empty($input)) {
             $scenario($input);
         } else {
-            echo "Invalid option.\n";
+            if ($default) {
+                $default();
+            } else {
+                echo "Invalid option.\n";
+                exit;
+            }
         }
     }
 }
