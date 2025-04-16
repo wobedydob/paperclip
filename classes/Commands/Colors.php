@@ -3,6 +3,7 @@
 namespace Paperclip\Commands;
 
 use Paperclip\Paperclip;
+use Paperclip\Utilities\Log;
 
 class Colors extends Command
 {
@@ -21,8 +22,7 @@ class Colors extends Command
 
         if ($displayOptions) {
             $usage .= "      Available colors are:\n";
-            foreach (self::colors() as $color)
-            {
+            foreach (self::colors() as $color) {
                 $usage .= "            - " . $color . "\n";
             }
         }
@@ -32,6 +32,10 @@ class Colors extends Command
 
     public function execute(): void
     {
-        echo self::usage(true);
+        Log::header("HELP");
+        Log::newLine();
+        Log::message(self::usage(true));
+        Log::newLine();
+        Log::footer("HELP");
     }
 }
