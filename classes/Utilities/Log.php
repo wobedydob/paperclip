@@ -2,13 +2,12 @@
 
 namespace Paperclip\Utilities;
 
+use Paperclip\Paperclip;
 use Paperclip\Traits\ANSI;
 
 class Log
 {
     use ANSI;
-
-    public const string PROJECT_TITLE = PROJECT_NAME;
 
     public static function message(string $message): void
     {
@@ -45,28 +44,32 @@ class Log
         echo "\n";
     }
 
-    public static function banner(string $open = '/', string $close = "\\", string $title = self::PROJECT_TITLE): void
+    public static function banner(string $open = '/', string $close = "\\", ?string $subject = null): void
     {
-        echo self::dark_gray("==========================================")
-            . self::bold(self::light_red(" [ $open ")) . self::bold(self::white($title)) . self::bold(self::light_red(" $close ] "))
-            . self::dark_gray("==========================================\n");
-    }
+        $paperclip = Paperclip::instance();
+        $title = $paperclip->config('name', Paperclip::DEFAULT_NAME);
 
-    public static function header(string $subject = null, string $name = self::PROJECT_TITLE): void
-    {
-        $title = $name;
-        if ($subject) {
+        if ($subject && $paperclip->config('display_subject', true)) {
             $title = $title . ' - ' . $subject;
         }
-        self::banner('/' ,'\\', $title);
+
+        $row = $paperclip->config('colors.banner.row', 'dark_gray');
+        $rowTitle = $paperclip->config('colors.banner.title', 'white');
+        $braces = $paperclip->config('colors.banner.braces', 'light_red');
+        $slashes = $paperclip->config('colors.banner.slashes', 'light_red');
+
+        echo self::$row("==========================================")
+            . self::bold(self::$braces(" [ ")) . self::bold(self::$slashes($open)) . ' ' . self::bold(self::$rowTitle($title)) . ' ' . self::bold(self::$slashes($close)) . self::bold(self::$braces(" ] "))
+            . self::$row("==========================================\n");
     }
 
-    public static function footer(string $subject = null, string $name = self::PROJECT_TITLE): void
+    public static function header(string $subject = null): void
     {
-        $title = $name;
-        if ($subject) {
-            $title = $title . ' - ' . $subject;
-        }
-        self::banner('\\', '/', $title);
+        self::banner('/' ,'\\', $subject);
+    }
+
+    public static function footer(string $subject = null): void
+    {
+        self::banner('\\', '/', $subject);
     }
 }

@@ -4,6 +4,7 @@ namespace Paperclip\Commands;
 
 use Paperclip\Exceptions\InvalidConfigFileException;
 use Paperclip\Exceptions\MissingPropertyException;
+use Paperclip\Paperclip;
 use Paperclip\Traits\ANSI;
 use Paperclip\Utilities\Arguments;
 use Paperclip\Utilities\FileManager;
@@ -118,9 +119,19 @@ abstract class Command
 
     public static function usages(): string
     {
+        $paperclip = Paperclip::instance();
+
+        $title = $paperclip->config('colors.info.title', 'yellow');
+        $text = $paperclip->config('colors.info.text', 'light_gray');
+        $parameter = $paperclip->config('colors.info.parameter', 'white');
+
+        $notesTitle = $paperclip->config('colors.notes.title', 'light_magenta');
+        $notesText = $paperclip->config('colors.notes.text', 'white');
+        $notesBullet = $paperclip->config('colors.notes.bullet', 'light_yellow');
+
         # USAGES
-        $string = self::yellow("Usage: ") . self::light_gray("./execute.php") . " [command] [arguments]\n\n";
-        $string .= self::yellow("Commands:\n");
+        $string = self::$title("Usage: ") . self::$text("./execute.php") . self::$parameter(" [command] [arguments]") . "\n\n";
+        $string .= self::$title("Commands:\n");
         foreach (self::commands() as $command) {
             /** @var Command $command */
             if ($usage = $command::usage()) {
@@ -128,9 +139,9 @@ abstract class Command
             }
         }
         # NOTES
-        $string .= "\n" . self::magenta("Notes:\n");
-        $string .= self::magenta("- ") . "All commands are case-sensitive.\n";
-        $string .= self::magenta("- ") . "Ensure PHP is installed and the script has execute permissions (use chmod +x if necessary).\n";
+        $string .= "\n" . self::$notesTitle("Notes:\n");
+        $string .= self::$notesBullet("- ") . self::$notesText("All commands are case-sensitive.") . "\n";
+        $string .= self::$notesBullet("- ") . self::$notesText("Ensure PHP is installed and the script has execute permissions (use chmod +x if necessary).") . "\n";
         return $string;
     }
 }

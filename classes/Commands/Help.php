@@ -2,6 +2,7 @@
 
 namespace Paperclip\Commands;
 
+use Paperclip\Paperclip;
 use Paperclip\Utilities\Log;
 
 class Help extends Command
@@ -10,10 +11,14 @@ class Help extends Command
 
     public static function usage(): string
     {
+        $paperclip = Paperclip::instance();
+        $highlight = $paperclip->config('colors.info.highlight', 'green');
+        $description = $paperclip->config('colors.info.description', 'light_gray');
+
         $command = self::$command;
 
-        $usage = self::green("> $command\n");
-        $usage .= "      Displays this help message with a list of available commands and their usage.\n";
+        $usage = self::$highlight("> $command\n");
+        $usage .= self::$description("      Displays this help message with a list of available commands and their usage.") . "\n";
         return $usage;
     }
 

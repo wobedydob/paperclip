@@ -133,12 +133,9 @@ trait ANSI
 
     public static function __callStatic(string $name, array $arguments): string
     {
-        if (!isset(self::$options[$name])) {
-            throw new \BadMethodCallException("Method $name does not exist in " . __CLASS__);
-        }
-
         $text = $arguments[0] ?? '';
-        return self::colorize($text, self::$options[$name]);
+        $colorCode = self::$options[$name] ?? self::$options['white'];
+        return self::colorize($text, $colorCode);
     }
 
     public static function colors(): array
