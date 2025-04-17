@@ -54,7 +54,7 @@ class Config
         return $this->config;
     }
 
-    public function color(string $key, mixed $default): array
+    public function color(string $key, mixed $default): mixed
     {
         $key = 'colors.' . $key;
         return $this->get($key, $default);
