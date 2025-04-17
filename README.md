@@ -9,25 +9,55 @@ A PHP CLI tool to manage custom commands.
 ```php
 #!/usr/bin/env php
 <?php
+use Paperclip\Enums\ColorOption;
+use Paperclip\Paperclip;
 
 # Composer autoload
 $autoload = __DIR__ . '/vendor/autoload.php';
-if (!file_exists($autoload)) {
-    echo "Composer autoload file not found. Please run `composer install` first.\n";
-    exit;
+if (file_exists($autoload)) {
+    require $autoload;
 }
-require $autoload;
 
 # Paperclip setup
-if (!file_exists(__DIR__ . '/vendor/wuppo/paperclip')) {
-    echo "Paperclip not found. Please install it first. Please run `composer require wuppo/paperclip`\n";
-    exit;
-}
-
-const PROJECT_NAME = 'NAME_OF_YOUR_PROJECT';
-$paperclip = new Paperclip\Paperclip($argv);
-$paperclip->execute();
+Paperclip::instance()
+    ->setup($argv)
+    ->execute();
 ```
+
+## Customising Paperclip
+You can also customise the look of Paperclip by adding a config array to the `Paperclip::instance()->setup()` method.
+```php
+# Paperclip setup
+Paperclip::instance()
+    ->setup($argv,
+        [
+            'display_subject' => false,
+            'colors' => [
+                'banner' => [
+                    'row' => ColorOption::DARK_GRAY->value,
+                    'braces' => ColorOption::LIGHT_RED->value,
+                    'slashes' => ColorOption::LIGHT_RED->value,
+                    'title' => ColorOption::WHITE->value,
+                ],
+                'info' => [
+                    'title' => ColorOption::YELLOW->value,
+                    'text' => ColorOption::LIGHT_GRAY->value,
+                    'description' => ColorOption::WHITE->value,
+                    'highlight' => ColorOption::GREEN->value,
+                    'parameter' => ColorOption::WHITE->value,
+                ],
+                'notes' => [
+                    'title' => ColorOption::MAGENTA->value,
+                    'text' => COLOROPTION::WHITE->value,
+                    'highlight' => ColorOption::LIGHT_YELLOW->value,
+                    'bullet' => COLOROPTION::MAGENTA->value,
+                ]
+            ]
+        ]
+    )
+    ->execute();
+```
+(This example shows the default settings)
 
 # Creating commands
 From the root of your project you can add Commands however you like.
