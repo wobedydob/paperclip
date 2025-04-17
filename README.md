@@ -31,6 +31,7 @@ You can also customise the look of Paperclip by adding a config array to the `Pa
 Paperclip::instance()
     ->setup($argv,
         [
+            'name' => 'Paperclip',
             'display_subject' => false,
             'colors' => [
                 'banner' => [
