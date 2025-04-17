@@ -7,7 +7,7 @@ use Paperclip\Utilities\Log;
 
 class Help extends Command
 {
-    public static string $command = 'help';
+    protected static string $command = 'help';
 
     public static function usage(): string
     {

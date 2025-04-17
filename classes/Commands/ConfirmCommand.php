@@ -4,7 +4,7 @@ namespace Paperclip\Commands;
 
 abstract class ConfirmCommand extends Command
 {
-    public static string $command;
+    protected static string $command;
 
     public function executeWithOption(array $options, callable $scenario): void
     {

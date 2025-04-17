@@ -15,10 +15,10 @@ abstract class Command
 {
     use ANSI;
 
-    private const array EXCLUDED_COMMANDS = [self::class, ConfirmCommand::class];
+    private const array EXCLUDED_COMMANDS = [self::class, ConfirmCommand::class, WalkthroughCommand::class];
 
-    public static string $command;
-    public static array $arguments = [];
+    protected static string $command;
+    protected static array $arguments = [];
     protected array $argv;
 
     public function __construct(array $argv)

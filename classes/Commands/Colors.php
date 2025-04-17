@@ -7,7 +7,7 @@ use Paperclip\Utilities\Log;
 
 class Colors extends Command
 {
-    public static string $command = 'colors';
+    protected static string $command = 'colors';
 
     public static function usage(bool $displayOptions = false): string
     {
