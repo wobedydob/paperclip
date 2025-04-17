@@ -2,9 +2,9 @@
 
 namespace Paperclip\Commands;
 
+use Paperclip\Config;
 use Paperclip\Exceptions\InvalidConfigFileException;
 use Paperclip\Exceptions\MissingPropertyException;
-use Paperclip\Paperclip;
 use Paperclip\Traits\ANSI;
 use Paperclip\Utilities\Arguments;
 use Paperclip\Utilities\FileManager;
@@ -119,15 +119,15 @@ abstract class Command
 
     public static function usages(): string
     {
-        $paperclip = Paperclip::instance();
+        $config = Config::instance();
 
-        $title = $paperclip->config('colors.info.title', 'yellow');
-        $text = $paperclip->config('colors.info.text', 'light_gray');
-        $parameter = $paperclip->config('colors.info.parameter', 'white');
+        $title = $config->get('colors.info.title', 'yellow');
+        $text = $config->get('colors.info.text', 'light_gray');
+        $parameter = $config->get('colors.info.parameter', 'white');
 
-        $notesTitle = $paperclip->config('colors.notes.title', 'light_magenta');
-        $notesText = $paperclip->config('colors.notes.text', 'white');
-        $notesBullet = $paperclip->config('colors.notes.bullet', 'light_yellow');
+        $notesTitle = $config->get('colors.notes.title', 'light_magenta');
+        $notesText = $config->get('colors.notes.text', 'white');
+        $notesBullet = $config->get('colors.notes.bullet', 'light_yellow');
 
         # USAGES
         $string = self::$title("Usage: ") . self::$text("./execute.php") . self::$parameter(" [command] [arguments]") . "\n\n";

@@ -2,7 +2,7 @@
 
 namespace Paperclip\Commands;
 
-use Paperclip\Paperclip;
+use Paperclip\Config;
 use Paperclip\Utilities\Log;
 
 class Colors extends Command
@@ -11,9 +11,9 @@ class Colors extends Command
 
     public static function usage(bool $displayOptions = false): string
     {
-        $paperclip = Paperclip::instance();
-        $highlight = $paperclip->config('colors.info.highlight', 'green');
-        $description = $paperclip->config('colors.info.description', 'light_gray');
+        $config = Config::instance();
+        $highlight = $config->get('colors.info.highlight', 'green');
+        $description = $config->get('colors.info.description', 'light_gray');
 
         $command = self::$command;
 

@@ -2,6 +2,7 @@
 
 namespace Paperclip\Utilities;
 
+use Paperclip\Config;
 use Paperclip\Paperclip;
 use Paperclip\Traits\ANSI;
 
@@ -46,17 +47,17 @@ class Log
 
     public static function banner(string $open = '/', string $close = "\\", ?string $subject = null): void
     {
-        $paperclip = Paperclip::instance();
-        $title = $paperclip->config('name', Paperclip::DEFAULT_NAME);
+        $config = Config::instance();
+        $title = $config->get('name', Paperclip::DEFAULT_NAME);
 
-        if ($subject && $paperclip->config('display_subject', true)) {
+        if ($subject && $config->get('display_subject', true)) {
             $title = $title . ' - ' . $subject;
         }
 
-        $row = $paperclip->config('colors.banner.row', 'dark_gray');
-        $rowTitle = $paperclip->config('colors.banner.title', 'white');
-        $braces = $paperclip->config('colors.banner.braces', 'light_red');
-        $slashes = $paperclip->config('colors.banner.slashes', 'light_red');
+        $row = $config->get('colors.banner.row', 'dark_gray');
+        $rowTitle = $config->get('colors.banner.title', 'white');
+        $braces = $config->get('colors.banner.braces', 'light_red');
+        $slashes = $config->get('colors.banner.slashes', 'light_red');
 
         echo self::$row("==========================================")
             . self::bold(self::$braces(" [ ")) . self::bold(self::$slashes($open)) . ' ' . self::bold(self::$rowTitle($title)) . ' ' . self::bold(self::$slashes($close)) . self::bold(self::$braces(" ] "))

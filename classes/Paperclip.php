@@ -13,46 +13,25 @@ class Paperclip
 
     private string $execute;
     private array $argv;
-    private array $config;
-
-//    public function __construct(array $argv, array $config = [])
-//    {
-//        $execute = $argv[1] ?? null;
-//        if (!$execute) {
-//            Log::error("No command specified");
-//            exit;
-//        }
-//
-//        $this->execute = $execute;
-//        $this->argv = $argv;
-//        $this->config = $config;
-//    }
+    private Config $config;
 
     public static function instance(): self
     {
         if (!isset(self::$instance)) {
-            self::$instance = new self([], []);
+            self::$instance = new self();
         }
         return self::$instance;
     }
 
     public function config(string $key, mixed $default = null): mixed
     {
-        $keys = explode('.', $key);
-        $config = $this->config;
-        foreach ($keys as $key) {
-            if (!isset($config[$key])) {
-                return $default;
-            }
-            $config = $config[$key];
-        }
-        return $config;
+        return $this->config->get($key, $default);
     }
 
     public function setup(array $argv, array $config = []): self
     {
         $this->argv = $argv;
-        $this->config = $config;
+        $this->config = Config::instance()->setup($config);
 
         $execute = $argv[1] ?? null;
         if (!$execute) {
