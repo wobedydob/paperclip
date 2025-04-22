@@ -28,6 +28,11 @@ class Arguments
         return $this->argv;
     }
 
+    public function arguments(): array
+    {
+        return $this->arguments;
+    }
+
     public function hasFlag(string $flag): bool
     {
         return in_array($flag, $this->argv);
