@@ -17,19 +17,18 @@ abstract class WalkthroughCommand extends Command
 
     protected function run(): void
     {
-        foreach ($this->steps as $index => $step) {
+        foreach ($this->steps as $key => $step) {
             $prompt = $step['prompt'] ?? false;
-            $input = $step['input'] ?? false;
             $action = $step['action'] ?? false;
             $required = $step['required'] ?? true;
 
             if (!$prompt) {
-                Log::error("Missing description for step with index [$index]");
+                Log::error("Missing description for step with index [$key]");
                 continue;
             }
 
             // first check if input is given
-            if ($input) {
+            if (is_string($key)) {
 
                 $value = $this->ask($prompt);
                 if ($value === '') {
@@ -37,19 +36,22 @@ abstract class WalkthroughCommand extends Command
                 }
 
                 if (!$value && $required) {
-                    Log::error("No value provided for step with index [$index]");
+                    Log::error("No value provided for step with index [$key]");
                     exit;
                 }
 
-                $this->responses[$index] = $value;
+                $this->responses[$key] = $value;
+            } else {
+                Log::error("Invalid key [$key] for step. Expected a string.");
+                continue;
             }
 
             // then execute the action
             if ($action) {
                 if (is_callable($action)) {
-                    $action($this->responses[$index] ?? null);
+                    $action($this->responses[$key] ?? null);
                 } else {
-                    Log::error("Action for step with index [$index] is not callable");
+                    Log::error("Action for step with index [$key] is not callable");
                 }
             }
         }
@@ -59,5 +61,10 @@ abstract class WalkthroughCommand extends Command
     {
         Log::info($prompt);
         return trim(fgets(STDIN));
+    }
+
+    protected function value(string $key): ?string
+    {
+        return $this->responses[$key] ?? null;
     }
 }
