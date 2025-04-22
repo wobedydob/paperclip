@@ -112,6 +112,26 @@ abstract class Command
         return $commands;
     }
 
+    public function flags(): array
+    {
+        $available = [];
+        $args = $this->arguments();
+
+        foreach ($args->arguments() as $arg) {
+            if (str_starts_with($arg, '--')) {
+                $flag = explode('=', $arg);
+                $key = str_replace('--', '', $flag[0]);
+                $value = $flag[1] ?? null;
+
+                if ($value) {
+                    $available[$key] = $value;
+                }
+            }
+        }
+
+        return $available;
+    }
+
     private static function beExcluded(string $class): bool
     {
         return in_array($class, self::EXCLUDED_COMMANDS);
