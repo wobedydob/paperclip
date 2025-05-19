@@ -8,6 +8,7 @@ use Paperclip\Exceptions\MissingPropertyException;
 use Paperclip\Traits\ANSI;
 use Paperclip\Utilities\Arguments;
 use Paperclip\Utilities\FileManager;
+use Paperclip\Utilities\Log;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 
@@ -19,6 +20,7 @@ abstract class Command
 
     protected static string $command;
     protected static array $arguments = [];
+    protected static array $flags = [];
     protected array $argv;
 
     public function __construct(array $argv)
@@ -109,22 +111,27 @@ abstract class Command
 
     public function flags(): array
     {
-        $available = [];
-        $args = $this->arguments();
+        $args = $this->arguments()->argv();
+        $flags = [];
 
-        foreach ($args->arguments() as $arg) {
+        foreach ($args as $arg) {
             if (str_starts_with($arg, '--')) {
-                $flag = explode('=', $arg);
-                $key = str_replace('--', '', $flag[0]);
-                $value = $flag[1] ?? null;
 
-                if ($value) {
-                    $available[$key] = $value;
+                // remove -- from the flag input
+                $arg = substr($arg, 2);
+
+                // split the flag string into separate context value
+                [$flag, $value] = explode('=', $arg, 2) + [null, null];
+
+                if (in_array($flag, static::$flags, true)) {
+                    $flags[$flag] = $value;
+                } else {
+                    Log::warning("Ongeldige flag: --$flag");
                 }
             }
         }
 
-        return $available;
+        return $flags;
     }
 
     private static function beExcluded(string $class): bool
