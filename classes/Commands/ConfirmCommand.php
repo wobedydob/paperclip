@@ -6,6 +6,14 @@ abstract class ConfirmCommand extends Command
 {
     protected static string $command;
 
+    protected array $options = [];
+
+    public function __construct(array $argv, array $options = [])
+    {
+        parent::__construct($argv);
+        $this->options = $options;
+    }
+
     public function executeWithOption(array $options, callable $scenario): void
     {
         $option = $this->argv[2] ?? null;
