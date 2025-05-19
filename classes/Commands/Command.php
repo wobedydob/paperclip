@@ -15,7 +15,7 @@ abstract class Command
 {
     use ANSI;
 
-    private const array EXCLUDED_COMMANDS = [self::class, ConfirmCommand::class, WalkthroughCommand::class];
+    private const array EXCLUDED_COMMANDS = [self::class, ConfirmCommand::class, WalkthroughCommand::class, SplitCommand::class];
 
     protected static string $command;
     protected static array $arguments = [];
@@ -24,11 +24,6 @@ abstract class Command
     public function __construct(array $argv)
     {
         $this->argv = $argv;
-
-        if ($this->arguments()->hasHelpFlag()) {
-            echo $this->usage();
-            exit;
-        }
     }
 
     public abstract static function usage(): string;
