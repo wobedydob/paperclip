@@ -126,7 +126,7 @@ abstract class Command
                 if (in_array($flag, static::$flags, true)) {
                     $flags[$flag] = $value;
                 } else {
-                    Log::warning("Ongeldige flag: --$flag");
+                    Log::warning("Incorrect flag given: --$flag");
                 }
             }
         }
