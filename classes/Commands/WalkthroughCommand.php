@@ -57,7 +57,7 @@ abstract class WalkthroughCommand extends Command
         }
     }
 
-    private function ask(string $prompt): string
+    protected function ask(string $prompt): string
     {
         Log::info($prompt);
         return trim(fgets(STDIN));
