@@ -3,6 +3,7 @@
 namespace Paperclip;
 
 use Paperclip\Commands\Command;
+use Paperclip\Commands\Help;
 use Paperclip\Utilities\Log;
 
 class Paperclip
@@ -36,6 +37,7 @@ class Paperclip
         $execute = $argv[1] ?? null;
         if (!$execute) {
             Log::error("No command specified");
+            (new Help([]))->execute();
             exit;
         }
         $this->execute = $execute;
