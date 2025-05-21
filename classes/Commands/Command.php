@@ -116,15 +116,16 @@ abstract class Command
 
         foreach ($args as $arg) {
             if (str_starts_with($arg, '--')) {
-
                 // remove -- from the flag input
                 $arg = substr($arg, 2);
 
                 // split the flag string into separate context value
                 [$flag, $value] = explode('=', $arg, 2) + [null, null];
-
                 if (in_array($flag, static::$flags, true)) {
-                    $flags[$flag] = $value;
+                    $flags[$flag]['value'] = $value;
+                } else if (array_key_exists($flag, static::$flags)) {
+                    $flags[$flag] = ['value' => $value];
+                    $flags[$flag] = array_merge($flags[$flag], static::$flags[$flag]);
                 } else {
                     Log::warning("Incorrect flag given: --$flag");
                 }
@@ -132,6 +133,20 @@ abstract class Command
         }
 
         return $flags;
+    }
+
+    public function flag(string $key, string $property = null)
+    {
+        $flags = $this->flags();
+        if (array_key_exists($key, $flags)) {
+
+            if (!$property) {
+                return $flags[$key];
+            }
+
+            return $flags[$key][$property] ?? null;
+        }
+        return null;
     }
 
     private static function beExcluded(string $class): bool
