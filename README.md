@@ -49,9 +49,9 @@ Paperclip::instance()
                 ],
                 'notes' => [
                     'title' => ColorOption::MAGENTA->value,
-                    'text' => COLOROPTION::WHITE->value,
+                    'text' => ColorOption::WHITE->value,
                     'highlight' => ColorOption::LIGHT_YELLOW->value,
-                    'bullet' => COLOROPTION::MAGENTA->value,
+                    'bullet' => ColorOption::MAGENTA->value,
                 ]
             ]
         ]
