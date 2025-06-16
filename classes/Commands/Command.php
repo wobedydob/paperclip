@@ -135,8 +135,10 @@ abstract class Command
         return $flags;
     }
 
-    public function flag(string $key, string $property = null)
+    public function flag(string $key, string $property = null): ?string
     {
+        $result = null;
+
         $flags = $this->flags();
         if (array_key_exists($key, $flags)) {
 
@@ -144,9 +146,15 @@ abstract class Command
                 return $flags[$key];
             }
 
-            return $flags[$key][$property] ?? null;
+            $result = $flags[$key][$property] ?? null;
         }
-        return null;
+
+        // if the flag is not set give back the default value if it exists
+        if ($result === null && array_key_exists($key, static::$flags)) {
+            $result = static::$flags[$key]['default'] ?? null;
+        }
+
+        return $result;
     }
 
     private static function beExcluded(string $class): bool
